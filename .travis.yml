@@ -1,7 +1,7 @@
 language: node_js
 node_js: stable
 before_script:
-- install --silent
+- bower install --silent
 addons:
   sauce_connect: true
 script:
