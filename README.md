@@ -6,7 +6,7 @@
 
 ### Example
 ```
-<paper-combobox></paper-combobox>
+<paper-combobox source="['Apple', 'Orange', ...]"></paper-combobox>
 ```
 
 ### Styling
@@ -15,6 +15,12 @@
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-combobox` | Mixin applied to the element | `{}`
+`--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
+`--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
+`--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
+`--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
+
+This element also supports all styling associated with `paper-input`.
 
 
 
