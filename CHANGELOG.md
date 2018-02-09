@@ -1,3 +1,9 @@
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/advanced-rest-client/paper-combobox/compare/0.1.2...0.1.3) (2018-02-09)
+
+
+
+
 <a name="0.1.2"></a>
 ## 0.1.2 (2018-02-09)
 
