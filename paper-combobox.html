@@ -26,7 +26,7 @@ the License.
 
 ### Example
 ```
-<paper-combobox></paper-combobox>
+<paper-combobox source="['Apple', 'Orange', ...]"></paper-combobox>
 ```
 
 ### Styling
@@ -35,6 +35,12 @@ the License.
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-combobox` | Mixin applied to the element | `{}`
+`--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
+`--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
+`--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
+`--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
+
+This element also supports all styling associated with `paper-input`.
 
 @group UI Elements
 @element paper-combobox
@@ -46,6 +52,7 @@ Custom property | Description | Default
     :host {
       display: block;
       position: relative;
+      @apply --paper-combobox;
     }
 
     :host([focused]) {
@@ -57,20 +64,20 @@ Custom property | Description | Default
     }
 
     paper-autocomplete {
-      top: 70px;
+      top: var(--paper-combobox-autocomplete-top, 54px);
     }
 
     :host([no-label-float]) paper-autocomplete {
-      top: 52px;
+      top: var(--paper-combobox-autocomplete-top-no-float, 36px);
     }
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-      @apply(--paper-input-container-input-webkit-spinner);
+      @apply --paper-input-container-input-webkit-spinner;
     }
 
     input::-webkit-clear-button {
-      @apply(--paper-input-container-input-webkit-clear);
+      @apply --paper-input-container-input-webkit-clear;
     }
 
     input::-webkit-input-placeholder {
@@ -86,7 +93,7 @@ Custom property | Description | Default
     }
 
     input::-ms-clear {
-      @apply(--paper-input-container-ms-clear);
+      @apply --paper-input-container-ms-clear;
     }
 
     input:-ms-input-placeholder {
@@ -95,6 +102,14 @@ Custom property | Description | Default
 
     label {
       pointer-events: none;
+    }
+
+    paper-icon-button {
+      margin: 0;
+      padding: 0;
+      width: var(--paper-combobox-icon-button-size, 24px);
+      height: var(--paper-combobox-icon-button-size, 24px);
+      @apply --paper-combobox-icon-button;
     }
     </style>
     <paper-input-container no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
