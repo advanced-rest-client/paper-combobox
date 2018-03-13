@@ -15,10 +15,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-    <script src="../../iron-test-helpers/test-helpers.js"></script>
-    <script src="../../iron-test-helpers/mock-interactions.js"></script>
-
-    <!-- Step 1: import the element to test -->
     <link rel="import" href="../paper-combobox.html">
   </head>
   <body>
@@ -35,19 +31,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ev.initEvent('input', true, false);
       target.dispatchEvent(ev);
     }
-    /* global sinon, fixture, assert */
+    /* global sinon */
     suite('basic', function() {
       var element;
-      setup(function() {
+      setup(function(done) {
         element = fixture('basic');
+        requestAnimationFrame(() => done());
+      });
+
+      test('Input element is set', () => {
+        assert.ok(element.inputElement);
+      });
+
+      test('Input element has id', () => {
+        assert.isTrue(element.inputElement.id.indexOf('input-') === 0);
       });
 
       test('Should query in user input', function() {
         var spy = sinon.spy();
         element.addEventListener('query', spy);
         element.value = 'test';
+
         notifyInput(element.inputElement);
         assert.isTrue(spy.called);
+      });
+
+      test('Opens suggestions', () => {
+        const ac = element.shadowRoot.querySelector('paper-autocomplete');
+        element.source = ['Test'];
+        ac._previousQuery = '';
+        element.open();
+        assert.isTrue(ac.opened);
       });
     });
     </script>

@@ -11,7 +11,8 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/utils/render-status.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
@@ -21,31 +22,7 @@ the License.
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../arc-icons/arc-icons.html">
 <link rel="import" href="../paper-autocomplete/paper-autocomplete.html">
-<!--
-`<paper-combobox>` An input element with a dropdown list of suggestions
 
-### Example
-```
-<paper-combobox source="['Apple', 'Orange', ...]"></paper-combobox>
-```
-
-### Styling
-`<paper-combobox>` provides the following custom properties and mixins for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-combobox` | Mixin applied to the element | `{}`
-`--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
-`--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
-`--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
-`--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
-
-This element also supports all styling associated with `paper-input`.
-
-@group UI Elements
-@element paper-combobox
-@demo demo/index.html
--->
 <dom-module id="paper-combobox">
   <template>
     <style>
@@ -61,6 +38,28 @@ This element also supports all styling associated with `paper-input`.
 
     :host([hidden]) {
       display: none !important;
+    }
+
+    input {
+      position: relative; /* to make a stacking context */
+      outline: none;
+      box-shadow: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--paper-input-container-input-color, var(--primary-text-color));
+      -webkit-appearance: none;
+      text-align: inherit;
+      vertical-align: bottom;
+
+      /* Firefox sets a min-width on the input, which can cause layout issues */
+      min-width: 0;
+
+      @apply --paper-font-subhead;
+      @apply --paper-input-container-input;
     }
 
     paper-autocomplete {
@@ -81,15 +80,15 @@ This element also supports all styling associated with `paper-input`.
     }
 
     input::-webkit-input-placeholder {
-      color: var(--paper-input-container-color, --secondary-text-color);
+      color: var(--paper-input-container-color, var(--secondary-text-color));
     }
 
     input:-moz-placeholder {
-      color: var(--paper-input-container-color, --secondary-text-color);
+      color: var(--paper-input-container-color, var(--secondary-text-color));
     }
 
     input::-moz-placeholder {
-      color: var(--paper-input-container-color, --secondary-text-color);
+      color: var(--paper-input-container-color, var(--secondary-text-color));
     }
 
     input::-ms-clear {
@@ -97,7 +96,7 @@ This element also supports all styling associated with `paper-input`.
     }
 
     input:-ms-input-placeholder {
-      color: var(--paper-input-container-color, --secondary-text-color);
+      color: var(--paper-input-container-color, var(--secondary-text-color));
     }
 
     label {
@@ -112,71 +111,179 @@ This element also supports all styling associated with `paper-input`.
       @apply --paper-combobox-icon-button;
     }
     </style>
-    <paper-input-container no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
+    <paper-input-container
+      no-label-float="[[noLabelFloat]]"
+      always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]"
+      auto-validate$="[[autoValidate]]"
+      disabled$="[[disabled]]"
+      invalid="[[invalid]]">
 
-      <content select="[prefix]"></content>
+      <slot name="prefix" slot="prefix"></slot>
 
-      <label hidden$="[[!label]]" aria-hidden="true" for="input">[[label]]</label>
+      <label hidden$="[[!label]]" aria-hidden="true" for$="[[_inputId]]" slot="label">[[label]]</label>
 
-      <input is="iron-input" id="input"
-        aria-labelledby$="[[_ariaLabelledBy]]"
-        aria-describedby$="[[_ariaDescribedBy]]"
-        disabled$="[[disabled]]"
-        title$="[[title]]"
-        bind-value="{{value}}"
-        invalid="{{invalid}}"
-        prevent-invalid-input="[[preventInvalidInput]]"
-        allowed-pattern="[[allowedPattern]]"
-        validator="[[validator]]"
-        type$="[[type]]"
-        pattern$="[[pattern]]"
-        required$="[[required]]"
-        autocomplete$="[[autocomplete]]"
-        autofocus$="[[autofocus]]"
-        inputmode$="[[inputmode]]"
-        minlength$="[[minlength]]"
-        maxlength$="[[maxlength]]"
-        min$="[[min]]"
-        max$="[[max]]"
-        step$="[[step]]"
-        name$="[[name]]"
-        placeholder$="[[placeholder]]"
-        readonly$="[[readonly]]"
-        list$="[[list]]"
-        size$="[[size]]"
-        autocapitalize$="[[autocapitalize]]"
-        autocorrect$="[[autocorrect]]"
-        on-change="_onChange"
-        tabindex$="[[tabindex]]"
-        autosave$="[[autosave]]"
-        results$="[[results]]"
-        accept$="[[accept]]"
-        multiple$="[[multiple]]">
+      <iron-input allowed-pattern="[[allowedPattern]]" slot="input" bind-value="{{value}}" invalid="{{invalid}}" validator="[[validator]]" class="paper-input-input">
+        <input
+          class="paper-input-input"
+          pattern$="[[pattern]]"
+          id$="[[_inputId]]"
+          aria-labelledby$="[[_ariaLabelledBy]]"
+          aria-describedby$="[[_ariaDescribedBy]]"
+          disabled$="[[disabled]]"
+          title$="[[title]]"
+          type$="[[type]]"
+          required$="[[required]]"
+          autocomplete$="[[autocomplete]]"
+          autofocus$="[[autofocus]]"
+          inputmode$="[[inputmode]]"
+          minlength$="[[minlength]]"
+          maxlength$="[[maxlength]]"
+          min$="[[min]]"
+          max$="[[max]]"
+          step$="[[step]]"
+          name$="[[name]]"
+          placeholder$="[[placeholder]]"
+          readonly$="[[readonly]]"
+          list$="[[list]]"
+          size$="[[size]]"
+          autocapitalize$="[[autocapitalize]]"
+          autocorrect$="[[autocorrect]]"
+          tabindex$="[[tabindex]]"
+          autosave$="[[autosave]]"
+          results$="[[results]]"
+          accept$="[[accept]]"
+          multiple$="[[multiple]]"
+          on-change="_onChange"/>
+      </iron-input>
 
-      <paper-icon-button icon="arc:arrow-drop-down" on-tap="open" suffix tabindex="-1"></paper-icon-button>
+      <paper-icon-button icon="arc:arrow-drop-down" on-tap="open" slot="suffix" tabindex="-1"></paper-icon-button>
 
-      <content select="[suffix]"></content>
+      <slot name="suffix" slot="suffix"></slot>
 
       <template is="dom-if" if="[[errorMessage]]">
-        <paper-input-error aria-live="assertive">[[errorMessage]]</paper-input-error>
+        <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
       </template>
 
       <template is="dom-if" if="[[charCounter]]">
-        <paper-input-char-counter></paper-input-char-counter>
+        <paper-input-char-counter slot="add-on"></paper-input-char-counter>
       </template>
 
     </paper-input-container>
     <paper-autocomplete target="[[inputElement]]" source="[[source]]" opened="{{opened}}" on-selected="_onSelected"></paper-input-autocomplete>
   </template>
   <script>
-  Polymer({
-    is: 'paper-combobox',
+  /**
+   * An input element with a dropdown list of suggestions
+   *
+   * ### Example
+   * ```
+   * <paper-combobox source="['Apple', 'Orange', ...]"></paper-combobox>
+   * ```
+   *
+   * ### Styling
+   *
+   * `<paper-combobox>` provides the following custom properties and mixins for styling:
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--paper-combobox` | Mixin applied to the element | `{}`
+   * `--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
+   * `--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
+   * `--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
+   * `--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
+   *
+   * This element also supports all styling defined for `paper-input`.
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   * @memberof UiElements
+   * @appliesMixin Polymer.IronFormElementBehavior
+   * @appliesMixin Polymer.PaperInputBehavior
+   */
+  class PaperCombobox extends Polymer.mixinBehaviors([
+    Polymer.IronFormElementBehavior, Polymer.PaperInputBehavior], Polymer.Element) {
+    static get is() { return 'paper-combobox'; }
+    static get properties() {
+      return {
+        /**
+         * True to open the suggestions box.
+         */
+        opened: Boolean,
+        /**
+         * List of suggestions to display.
+         * If the array items are strings they will be used for display a suggestions and
+         * to insert a value.
+         * If the list is an object the each object must contain `value` and `display`
+         * properties.
+         * The `display` property will be used in the suggestions list and the
+         * `value` property will be used to insert the value to the referenced text field.
+         */
+        source: Array,
 
-    behaviors: [
-      Polymer.IronFormElementBehavior,
-      Polymer.PaperInputBehavior
-    ],
+        noLabelFloat: {
+          type: Boolean,
+          reflectToAttribute: true
+        },
 
+        inputElement: {
+          type: Object,
+          readOnly: true
+        },
+        /**
+         * The tabindex of the element.
+         */
+        tabindex: Number
+      };
+    }
+
+    ready() {
+      super.ready();
+      let input = this.inputElement;
+      if (!input) {
+        input = this._ensureInputElement();
+        this._setInputElement(input);
+      }
+    }
+
+    // Opens the suggestions box
+    open() {
+      this.shadowRoot.querySelector('paper-autocomplete')._filterSuggestions();
+    }
+
+    _onSelected(e) {
+      this.value = e.detail.value;
+    }
+
+    /**
+     * Returns a reference to the input element.
+     * @return {!HTMLElement}
+     */
+    get inputElement() {
+      return this._ensureInputElement();
+    }
+
+    _ensureInputElement() {
+      if (!this.__data) {
+        return;
+      }
+      if (!this.$) {
+        this.$ = {};
+      }
+      if (!this.$.input) {
+        this._generateInputId();
+        this.$.input = this.shadowRoot.querySelector('#' + this._inputId);
+      }
+      return this.$.input;
+    }
+
+    _generateInputId() {
+      if (!this.__data) {
+        return;
+      }
+      if (!this._inputId || this._inputId === '') {
+        this._inputId =  'input-' + Polymer.PaperInputHelper.NextInputID++;
+      }
+    }
     /**
      * Fired when user entered some text into the input.
      * It is a time to query external datastore for suggestions and update "source" property.
@@ -189,52 +296,7 @@ This element also supports all styling associated with `paper-input`.
      * @event query
      * @param {String} value An entered phrase in text field.
      */
-
-    properties: {
-      /**
-       * True to open the suggestions box.
-       */
-      opened: Boolean,
-      /**
-       * List of suggestions to display.
-       * If the array items are strings they will be used for display a suggestions and
-       * to insert a value.
-       * If the list is an object the each object must contain `value` and `display`
-       * properties.
-       * The `display` property will be used in the suggestions list and the
-       * `value` property will be used to insert the value to the referenced text field.
-       */
-      source: Array,
-      noLabelFloat: {
-        type: Boolean,
-        reflectToAttribute: true
-      },
-      inputElement: {
-        type: Object,
-        value: function() {
-          return this.$.input;
-        }
-      },
-      /**
-       * The tabindex of the element.
-       */
-      tabindex: Number
-    },
-
-    ready: function() {
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this.$$('paper-autocomplete')._previousQuery = '';
-      });
-    },
-
-    // Opens the suggestions box
-    open: function() {
-      this.$$('paper-autocomplete')._filterSuggestions();
-    },
-
-    _onSelected: function(e) {
-      this.value = e.detail.value;
-    }
-  });
+  }
+  window.customElements.define(PaperCombobox.is, PaperCombobox);
   </script>
 </dom-module>
