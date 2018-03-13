@@ -1,8 +1,15 @@
-[![Build Status](https://travis-ci.org/advanced-rest-client/paper-combobox.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-combobox)  
+[![Build Status](https://travis-ci.org/advanced-rest-client/paper-combobox.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-combobox)
 
-# paper-combobox
+## UiElements.PaperCombobox component
+Tag: `<paper-combobox>`
 
-`<paper-combobox>` An input element with a dropdown list of suggestions
+### Installation
+Using bower:
+```
+bower install --save advanced-rest-client/paper-combobox
+```
+
+An input element with a dropdown list of suggestions
 
 ### Example
 ```
@@ -10,8 +17,8 @@
 ```
 
 ### Styling
-`<paper-combobox>` provides the following custom properties and mixins for styling:
 
+`<paper-combobox>` provides the following custom properties and mixins for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--paper-combobox` | Mixin applied to the element | `{}`
@@ -20,11 +27,42 @@ Custom property | Description | Default
 `--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
 `--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
 
-This element also supports all styling associated with `paper-input`.
+This element also supports all styling defined for `paper-input`.
+
+## API
+### Component properties (attributes)
+
+#### noLabelFloat
+- Type: `boolean`
 
 
+#### opened
+- Type: `boolean`
+True to open the suggestions box.
 
-### Events
-| Name | Description | Params |
-| --- | --- | --- |
-| query | Fired when user entered some text into the input. It is a time to query external datastore for suggestions and update "source" property. Source should be updated event if the backend result with empty values and should set the list to empty array.  Nore that setting up source in response to this event after the user has closed the dropdown it will have no effect at the moment. | value **String** - An entered phrase in text field. |
+#### source
+- Type: `Array`
+List of suggestions to display.
+If the array items are strings they will be used for display a suggestions and
+to insert a value.
+If the list is an object the each object must contain `value` and `display`
+properties.
+The `display` property will be used in the suggestions list and the
+`value` property will be used to insert the value to the referenced text field.
+
+#### inputElement
+- Type: `Object`
+- Read only property
+
+
+#### tabindex
+- Type: `number`
+The tabindex of the element.
+
+
+### Component methods
+
+#### open
+- Return type: `undefined`
+Opens the suggestions box
+
