@@ -1,11 +1,10 @@
 {
-  "name": "@api-components/paper-combobox",
-  "version": "2.0.2",
+  "name": "@advanced-rest-client/paper-combobox",
+  "version": "2.0.3",
   "license": "Apache-2.0",
   "description": "An input element with a dropdown list of suggestions",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1",
-    "bower": "^1.8.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1"
   },
   "private": false,
   "main": "paper-combobox.html",
@@ -14,10 +13,10 @@
     "The Advanced REST Client authors"
   ],
   "scripts": {
-    "lint": "node_modules/.bin/polymer lint paper-combobox.html",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"paper-combobox:local-test\"",
-    "test": "node_modules/.bin/polymer test --plugin local",
-    "update-types": "bower install && gen-typescript-declarations --deleteExisting --outDir ."
+    "lint": "polymer lint paper-combobox.html",
+    "test-sauce": "polymer test --plugin sauce --job-name \"paper-combobox:local-test\"",
+    "test": "polymer test --plugin local",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
   "repository": {
     "type": "git",
