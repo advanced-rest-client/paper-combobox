@@ -1,5 +1,6 @@
 {
   "name": "arc-icons",
+  "version": "2.0.3",
   "description": "An icons set for Advanced REST client",
   "authors": [
     "The Advanced REST Client authors"
@@ -38,7 +39,6 @@
     ".jscsrc",
     ".jshintrc"
   ],
-  "version": "2.0.2",
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },
@@ -80,11 +80,11 @@
     }
   },
   "homepage": "https://github.com/advanced-rest-client/arc-icons",
-  "_release": "2.0.2",
+  "_release": "2.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "2.0.2",
-    "commit": "a1699ce36125f8bfb880c99455c8506c922b390e"
+    "tag": "2.0.3",
+    "commit": "72178d1f4ab3b20d41183c148120b06f07ffcf4d"
   },
   "_source": "https://github.com/advanced-rest-client/arc-icons.git",
   "_target": "^2.0.0",
