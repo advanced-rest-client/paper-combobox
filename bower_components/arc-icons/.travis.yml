@@ -1,16 +1,27 @@
 language: node_js
-node_js: stable
+node_js: 8
+sudo: required
 before_script:
-- bower install --silent
+- npm install -g polymer-cli
+- npm install -g bower
+- polymer install --variants
 addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
   sauce_connect: true
 script:
-- polymer test --plugin sauce --job-name "arc-icons:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+- xvfb-run polymer test polymer test --plugin local
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce --job-name
+  "arc-icons:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi
 cache:
   directories:
   - node_modules
 after_success:
-- node tasks/ci.js
+  - node tasks/ci.js
 env:
   global:
   - secure: IP5nibQK/DEG8ZEggc6ozEZ6Rhyd0x+IHdw+93MPpvke5DbAe0qitA9C6LTpohwruIo/ivxzB6fEovHeVJMbLkfFc41CWwy6J78r+HZUxJiE19/vzPkqy1py6XK90EQpnXDljGiWkNTfqLRlir8y0x32xIpVCm5LtAd36Wt7DL+A7GKogIut8tr7Iv9t/Ljx/zFacntlRE2rruHai/sgRH1Qs6YfFZxjkG+nhluiuQGqxtQd8G2adD+CkWJJ4fZc+2diKVmf2K6Ky+MZQS6I7hUUnKdFubJJvJHPh2EXPcGa6ksifsJHww59d5clNdcDRi1VkqC2fZFV/h6gucphnjb6kz6pSLjdaPF+Mg6gTNas7tj9FyoConF7RcOrsqSCuCkhiusHFWBZ30lUMRnulWnzpoGOQu9qoUcOvBMyfZ/gVBDKK5/ZUSOQyakzggI3DHjvcRVTIRrB3dTIZAD8UbQ/MQXNmlXQp37W47L/9FGoNEhJFBpWPYlbRFJCaAfMxoD6TXNm+vCZJcoBTqnIWj4LPAss3vQ2gBlFd+SOv+P9N3jfn/KTvIlk/CjSkJolHE3zKlYypQMnKzCFgaoDYx40PBs6o/hP3xV5XgUBTLirIwY8KNcNtQlgR1w6/8muwrQ9dt4qXiFtWPDhSZK2tEOPG6DEbPmM26bIrRdCxQI=

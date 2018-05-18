@@ -2,7 +2,7 @@
   "name": "paper-autocomplete",
   "description": "Paper autocomplete element to be used with paper-, iron- and regular inputs.",
   "license": "Apache-2.0",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
     "The Advanced REST Client authors"
@@ -49,14 +49,11 @@
     "paper-button": "polymerelements/paper-button#^2.0.0",
     "chance": "^1.0.0"
   },
-  "resolutions": {
-    "polymer": "^2.0.0"
-  },
-  "_release": "2.0.3",
+  "_release": "2.0.4",
   "_resolution": {
     "type": "version",
-    "tag": "2.0.3",
-    "commit": "8729e77bf397ab7d4d1ecbd119e7a3d6b9479e08"
+    "tag": "2.0.4",
+    "commit": "ba0e4932b46a7f7a34bad8b51fad7933bff06249"
   },
   "_source": "https://github.com/advanced-rest-client/paper-autocomplete.git",
   "_target": "^2.0.0",

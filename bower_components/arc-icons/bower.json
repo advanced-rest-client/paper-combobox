@@ -1,5 +1,6 @@
 {
   "name": "arc-icons",
+  "version": "2.0.3",
   "description": "An icons set for Advanced REST client",
   "authors": [
     "The Advanced REST Client authors"
@@ -38,7 +39,6 @@
     ".jscsrc",
     ".jshintrc"
   ],
-  "version": "2.0.2",
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
   },

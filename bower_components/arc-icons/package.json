@@ -1,25 +1,19 @@
 {
   "name": "@api-components/arc-icons",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "license": "Apache-2.0",
   "description": "An icons set for Advanced REST client and API components",
   "devDependencies": {
-    "polymer-cli": "^0.17.0",
-    "@polymer/gen-typescript-declarations": "^1.2.0",
-    "bower": "^1.8.0"
+    "@polymer/gen-typescript-declarations": "^1.2.0"
   },
   "private": false,
-  "main": [
-    "arc-icons.html"
-  ],
+  "main": "arc-icons.html",
   "author": "The Advanced REST client authors",
   "scripts": {
-    "serve": "node_modules/.bin/polymer serve",
-    "lint": "node_modules/.bin/polymer lint arc-icons.html",
-    "deps": "npm install --quiet && bower install --quiet",
-    "update-types": "bower install && gen-typescript-declarations --deleteExisting --outDir .",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"arc-icons:local-test\"",
-    "test": "node_modules/.bin/polymer test --plugin local"
+    "lint": "polymer lint arc-icons.html",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir .",
+    "test-sauce": "polymer test --plugin sauce --job-name \"arc-icons:local-test\"",
+    "test": "polymer test --plugin local"
   },
   "repository": {
     "type": "git",
