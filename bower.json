@@ -1,7 +1,7 @@
 {
   "name": "paper-combobox",
   "description": "An input element with a dropdown list of suggestions",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "license": "Apache-2.0",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
@@ -35,7 +35,6 @@
   },
   "ignore": [
     "**/.*",
-    "dependencyci.yml",
     "node_modules",
     "bower_components",
     "test",
