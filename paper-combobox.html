@@ -117,14 +117,10 @@ the License.
       auto-validate$="[[autoValidate]]"
       disabled$="[[disabled]]"
       invalid="[[invalid]]">
-
       <slot name="prefix" slot="prefix"></slot>
-
       <label hidden$="[[!label]]" aria-hidden="true" for$="[[_inputId]]" slot="label">[[label]]</label>
-
-      <iron-input allowed-pattern="[[allowedPattern]]" slot="input" bind-value="{{value}}" invalid="{{invalid}}" validator="[[validator]]" class="paper-input-input">
+      <iron-input allowed-pattern="[[allowedPattern]]" slot="input" bind-value="{{value}}" invalid="{{invalid}}" validator="[[validator]]">
         <input
-          class="paper-input-input"
           pattern$="[[pattern]]"
           id$="[[_inputId]]"
           aria-labelledby$="[[_ariaLabelledBy]]"
@@ -155,21 +151,16 @@ the License.
           multiple$="[[multiple]]"
           on-change="_onChange"/>
       </iron-input>
-
       <paper-icon-button icon="arc:arrow-drop-down" on-tap="open" slot="suffix" tabindex="-1"></paper-icon-button>
-
       <slot name="suffix" slot="suffix"></slot>
-
       <template is="dom-if" if="[[errorMessage]]">
         <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
       </template>
-
       <template is="dom-if" if="[[charCounter]]">
         <paper-input-char-counter slot="add-on"></paper-input-char-counter>
       </template>
-
     </paper-input-container>
-    <paper-autocomplete target="[[inputElement]]" source="[[source]]" opened="{{opened}}" on-selected="_onSelected"></paper-input-autocomplete>
+    <paper-autocomplete target="[[_focusInputElement]]" source="[[source]]" opened="{{opened}}" on-selected="_onSelected" open-on-focus></paper-input-autocomplete>
   </template>
   <script>
   /**
@@ -186,8 +177,9 @@ the License.
    * Custom property | Description | Default
    * ----------------|-------------|----------
    * `--paper-combobox` | Mixin applied to the element | `{}`
-   * `--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
-   * `--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
+   * `--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. | `54px`
+   * `--paper-combobox-autocomplete-top-no-float` | Top posiotn of the autocomplete
+   * element when label not floating. | `36px`
    * `--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
    * `--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
    *
@@ -225,9 +217,8 @@ the License.
           reflectToAttribute: true
         },
 
-        inputElement: {
-          type: Object,
-          readOnly: true
+        _focusInputElement: {
+          type: Object
         },
         /**
          * The tabindex of the element.
@@ -238,11 +229,8 @@ the License.
 
     ready() {
       super.ready();
-      let input = this.inputElement;
-      if (!input) {
-        input = this._ensureInputElement();
-        this._setInputElement(input);
-      }
+      this._generateInputId();
+      this._focusInputElement = this.shadowRoot.querySelector('#' + this._inputId);
     }
 
     // Opens the suggestions box
@@ -259,27 +247,19 @@ the License.
      * @return {!HTMLElement}
      */
     get inputElement() {
-      return this._ensureInputElement();
-    }
-
-    _ensureInputElement() {
-      if (!this.__data) {
+      if (!this.shadowRoot) {
         return;
       }
       if (!this.$) {
         this.$ = {};
       }
       if (!this.$.input) {
-        this._generateInputId();
-        this.$.input = this.shadowRoot.querySelector('#' + this._inputId);
+        this.$.input = this.shadowRoot.querySelector('iron-input');
       }
       return this.$.input;
     }
 
     _generateInputId() {
-      if (!this.__data) {
-        return;
-      }
       if (!this._inputId || this._inputId === '') {
         this._inputId =  'input-' + Polymer.PaperInputHelper.NextInputID++;
       }
