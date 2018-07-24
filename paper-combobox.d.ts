@@ -36,8 +36,9 @@ declare namespace UiElements {
    * Custom property | Description | Default
    * ----------------|-------------|----------
    * `--paper-combobox` | Mixin applied to the element | `{}`
-   * `--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. Default value assumes label to be loating. | `54px`
-   * `--paper-combobox-autocomplete-top-no-float` | Top posiiotn of the autocomplete element when label will not float. | `36px`
+   * `--paper-combobox-autocomplete-top` | Top position of the autocomplete elemement. | `54px`
+   * `--paper-combobox-autocomplete-top-no-float` | Top posiotn of the autocomplete
+   * element when label not floating. | `36px`
    * `--paper-combobox-icon-button-size` | Size of the trigger icon | `24px`
    * `--paper-combobox-icon-button` | Mixin applied to trigger icon button | `{}`
    *
@@ -69,6 +70,7 @@ declare namespace UiElements {
      */
     source: any[]|null|undefined;
     noLabelFloat: boolean|null|undefined;
+    _focusInputElement: object|null|undefined;
 
     /**
      * The tabindex of the element.
@@ -81,7 +83,6 @@ declare namespace UiElements {
      */
     open(): void;
     _onSelected(e: any): void;
-    _ensureInputElement(): any;
     _generateInputId(): void;
   }
 }

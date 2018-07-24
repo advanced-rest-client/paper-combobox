@@ -1,59 +1,51 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <link rel="import" href="../paper-combobox.html">
   </head>
   <body>
 
-    <test-fixture id="basic">
+    <test-fixture id="Basic">
       <template>
         <paper-combobox></paper-combobox>
       </template>
     </test-fixture>
 
+    <test-fixture id="Required">
+      <template>
+        <paper-combobox required></paper-combobox>
+      </template>
+    </test-fixture>
+
     <script>
-    function notifyInput(target) {
-      var ev = document.createEvent('Event');
-      ev.initEvent('input', true, false);
-      target.dispatchEvent(ev);
-    }
-    /* global sinon */
     suite('basic', function() {
-      var element;
+      let element;
       setup(function(done) {
-        element = fixture('basic');
-        requestAnimationFrame(() => done());
+        element = fixture('Basic');
+        flush(() => done());
       });
 
-      test('Input element is set', () => {
+      test('_inputId is generated', () => {
+        const result = element._inputId;
+        assert.equal(result, 'input-1');
+      });
+
+      test('inputElement renturns iron-input', () => {
         assert.ok(element.inputElement);
+        assert.equal(element.inputElement.nodeName, 'IRON-INPUT');
+      });
+
+      test('_focusInputElement renturns input', () => {
+        assert.ok(element._focusInputElement);
+        assert.equal(element._focusInputElement.nodeName, 'INPUT');
       });
 
       test('Input element has id', () => {
-        assert.isTrue(element.inputElement.id.indexOf('input-') === 0);
-      });
-
-      test('Should query in user input', function() {
-        var spy = sinon.spy();
-        element.addEventListener('query', spy);
-        element.value = 'test';
-
-        notifyInput(element.inputElement);
-        assert.isTrue(spy.called);
+        assert.isTrue(element._focusInputElement.id.indexOf('input-') === 0);
       });
 
       test('Opens suggestions', () => {
@@ -62,6 +54,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ac._previousQuery = '';
         element.open();
         assert.isTrue(ac.opened);
+      });
+    });
+
+    suite('Validation', function() {
+      let element;
+      setup(function(done) {
+        element = fixture('Required');
+        flush(() => done());
+      });
+
+      test('Do not passes validation', () => {
+        const result = element.validate();
+        assert.isFalse(result);
+      });
+
+      test('Passes validation with value', () => {
+        element.value = 'test';
+        const result = element.validate();
+        assert.isTrue(result);
       });
     });
     </script>
