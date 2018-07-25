@@ -1,3 +1,16 @@
+## [2.0.5](https://github.com/advanced-rest-client/paper-combobox/compare/1.0.0...2.0.5) (2018-07-25)
+
+
+### Docs
+
+* Updating documentation ([b08d0ca36bfa137a7e2563f4a1af84b3ed5b3b74](https://github.com/advanced-rest-client/paper-combobox/commit/b08d0ca36bfa137a7e2563f4a1af84b3ed5b3b74))
+
+### Fix
+
+* Fixed issues with component validation ([d7a654926241ff8a350b5deb478f2e58e88f9f6f](https://github.com/advanced-rest-client/paper-combobox/commit/d7a654926241ff8a350b5deb478f2e58e88f9f6f))
+
+
+
 <a name="2.0.4"></a>
 ## [2.0.4](https://github.com/advanced-rest-client/paper-combobox/compare/1.0.0...2.0.4) (2018-07-24)
 
