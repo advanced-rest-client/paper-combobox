@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "description": "An input element with a dropdown list of suggestions",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1"
+    "@polymer/gen-typescript-declarations": "^1.6.1"
   },
   "private": false,
   "main": "paper-combobox.html",
@@ -27,6 +27,6 @@
     "email": "arc@mulesoft.com"
   },
   "dependencies": {
-    "conventional-changelog-cli": "^2.0.1"
+    "conventional-changelog-cli": "^2.0.11"
   }
 }
