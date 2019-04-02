@@ -1,13 +1,31 @@
 {
-  "name": "@advanced-rest-client/paper-combobox",
-  "version": "2.0.5",
-  "license": "Apache-2.0",
   "description": "An input element with a dropdown list of suggestions",
-  "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.6.1"
+  "keywords": [
+    "web-components",
+    "polymer",
+    "autocomplete",
+    "select",
+    "combobox"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/paper-combobox.git"
   },
-  "private": false,
-  "main": "paper-combobox.html",
+  "name": "@advanced-rest-client/paper-combobox",
+  "version": "3.0.0-preview.1",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@polymer/gen-typescript-declarations": "^1.6.1",
+    "@polymer/iron-demo-helpers": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@polymer/iron-component-page": "^4.0.0",
+    "@polymer/test-fixture": "^4.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3",
+    "wct-mocha": "^1.0.0"
+  },
+  "main": "paper-combobox.js",
   "authors": [
     "Pawel Psztyc <jarrodek@gmail.com>",
     "The Advanced REST Client authors"
@@ -18,15 +36,20 @@
     "test": "polymer test --plugin local",
     "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/advanced-rest-client/paper-combobox.git"
-  },
   "bugs": {
     "url": "https://github.com/advanced-rest-client/paper-combobox/issues",
     "email": "arc@mulesoft.com"
   },
   "dependencies": {
+    "@advanced-rest-client/arc-icons": "^3.0.0-preview.2",
+    "@advanced-rest-client/paper-autocomplete": "^3.0.0-preview.2",
+    "@polymer/paper-icon-button": "^3.0.0",
+    "@polymer/paper-input": "^3.0.0",
+    "@polymer/polymer": "^3.0.0",
     "conventional-changelog-cli": "^2.0.11"
-  }
+  },
+  "contributors": [
+    "Pawel Psztyc <jarrodek@gmail.com>",
+    "The Advanced REST Client authors"
+  ]
 }
